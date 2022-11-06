@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/back_ground_start_quiz"
+    tools:context=".ui_user.SelectTopicActivity">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select topic to start"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"/>
+    <GridView
+        android:id="@+id/id_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:horizontalSpacing="8dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp" />
+</LinearLayout>

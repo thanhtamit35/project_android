@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mnu_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/mnu_start_quiz"
+        android:icon="@drawable/ic_baseline_not_started_24"
+        android:title="Start quiz" />
+
+    <item
+        android:id="@+id/mnu_setting"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Setting" />
+
+    <item
+        android:id="@+id/mnu_docs"
+        android:icon="@drawable/ic_baseline_file_download_24"
+        android:title="Docs" />
+
+    <item
+        android:id="@+id/mnu_history"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="History" />
+
+    <item
+        android:id="@+id/mnu_logout"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="Log out" />
+</menu>
