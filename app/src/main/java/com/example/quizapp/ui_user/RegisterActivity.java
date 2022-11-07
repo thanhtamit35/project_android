@@ -15,6 +15,8 @@ import com.example.quizapp.R;
 import com.example.quizapp.database.DBHelper;
 import com.example.quizapp.model.Account;
 
+import java.util.Objects;
+
 public class RegisterActivity extends AppCompatActivity {
     EditText edtFullName, edtUserName, edtPass, edtConfirmPass;
     ImageView iconShowPass, iconShowConfirm;
@@ -27,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        this.getSupportActionBar().hide();
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         mapping();
         showHidePass();
@@ -35,9 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void addActions() {
-        twSignIn.setOnClickListener(view -> {
-            startActivity(new Intent(this, LoginActivity.class));
-        });
+        twSignIn.setOnClickListener(view -> startActivity(new Intent(this, LoginActivity.class)));
 
         btnSignUp.setOnClickListener(view -> {
             String fullName = edtFullName.getText().toString();

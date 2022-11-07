@@ -33,6 +33,14 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        createActionbar();
+
+        sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
+        TextView twWelcome = findViewById(R.id.tw_welcome);
+        twWelcome.setText("Welcome, " + sharedPreferences.getString("fullNameAdmin", null));
+    }
+
+    private void createActionbar(){
         // Define ActionBar object
         ActionBar actionBar;
         actionBar = getSupportActionBar();
@@ -79,10 +87,6 @@ public class AdminActivity extends AppCompatActivity {
 
             return true;
         });
-
-        sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
-        TextView twWelcome = findViewById(R.id.tw_welcome);
-        twWelcome.setText("Welcome, " + sharedPreferences.getString("fullNameAdmin", null));
     }
 
     // override the onOptionsItemSelected()

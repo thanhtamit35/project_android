@@ -11,6 +11,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.quizapp.R;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.util.Objects;
+
 public class ResultActivity extends AppCompatActivity {
     MaterialTextView twScore, twCorrect, twIncorrect;
     AppCompatButton btnContinue;
@@ -20,6 +22,7 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         mapping();
         addActions();

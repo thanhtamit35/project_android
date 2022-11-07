@@ -17,6 +17,8 @@ import com.example.quizapp.database.DBHelper;
 import com.example.quizapp.model.Account;
 import com.example.quizapp.ui_admin.AdminActivity;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     private boolean passwordShow = false;
@@ -32,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        this.getSupportActionBar().hide();
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         mapping();
 
@@ -66,17 +68,20 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 if (acc == null) {
-                    Toast.makeText(this, "Tài khoản hoặc mật khẩu không chính xác!", Toast.LENGTH_SHORT).show();
-                } else if (acc.getIdRole() == 1) {
-                    startActivity(new Intent(this, AdminActivity.class));
-                    editor.putString("adminName", acc.getUserName());
-                    editor.putString("fullNameAdmin", acc.getFullName());
+                    Toast.makeText(this, "Tài khoản không tồn tại!", Toast.LENGTH_SHORT).show();
+                } else if(pass.equals(acc.getPassword()) && userName.equals(acc.getUserName())){
+                    if (acc.getIdRole() == 1) {
+                        startActivity(new Intent(this, AdminActivity.class));
+                        editor.putString("adminName", acc.getUserName());
+                        editor.putString("fullNameAdmin", acc.getFullName());
+                    } else {
+                        startActivity(new Intent(this, MainActivity.class));
+                        editor.putString("userName", acc.getUserName());
+                        editor.putString("fullName", acc.getFullName());
+                    }
                     Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                 } else {
-                    startActivity(new Intent(this, MainActivity.class));
-                    editor.putString("userName", acc.getUserName());
-                    editor.putString("fullName", acc.getFullName());
-                    Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Tài khoản hoặc mật khẩu không chính xác!", Toast.LENGTH_SHORT).show();
                 }
 
                 editor.commit();

@@ -7,52 +7,39 @@
     android:layout_height="match_parent"
     tools:context=".ui_user.MainActivity">
 
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
 
-<!--        <FrameLayout-->
-<!--            android:id="@+id/frame_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginVertical="30dp"
+            android:src="@drawable/quiz" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|center_horizontal"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/tw_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Welcome, "
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="30dp"
-                    android:src="@drawable/quiz" />
+        <Button
+            android:id="@+id/btn_start_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="30dp"
+            android:backgroundTint="#4FA095"
+            android:text="Start now" />
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tw_welcome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Welcome, "
-                    android:textAlignment="center"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btn_start_now"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="30dp"
-                    android:backgroundTint="#4FA095"
-                    android:text="Start now" />
-            </LinearLayout>
-<!--        </FrameLayout>-->
-<!--    </RelativeLayout>-->
-
-    <!-- this the navigation view which draws and shows the navigation drawer -->
-    <!-- include the menu created in the menu folder -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"

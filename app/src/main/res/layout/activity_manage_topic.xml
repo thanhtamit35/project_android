@@ -1,63 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui_admin.ManageTopicActivity">
 
-    <TextView
-        android:id="@+id/tw_header"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginVertical="8dp"
-        android:text="DANH SÁCH TOPIC"
-        android:textAlignment="center"
-        android:textColor="#43a047"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_add_new_topic"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#54B435"
-        android:layout_gravity="end"
-        app:iconTint="#eceff1"
-        app:icon="@drawable/ic_baseline_add_24"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
-        android:hint="Tìm kiếm topic"
-        app:startIconContentDescription="content_description_start_icon"
-        app:startIconDrawable="@drawable/ic_baseline_search_24">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_search"
+        <TextView
+            android:id="@+id/tw_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPhonetic" />
+            android:layout_gravity="center"
+            android:layout_marginVertical="8dp"
+            android:text="DANH SÁCH TOPIC"
+            android:textAlignment="center"
+            android:textColor="#43a047"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_new_topic"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="#54B435"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:iconTint="#eceff1" />
 
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_weight="8"-->
-    <!--        android:orientation="vertical"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/btn_add">-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:hint="Tìm kiếm topic"
+            app:startIconContentDescription="content_description_start_icon"
+            app:startIconDrawable="@drawable/ic_baseline_search_24">
 
-    <ListView
-        android:id="@+id/lvw_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:listSelector="#e1f5fe" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPhonetic" />
 
-</LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ListView
+            android:id="@+id/lvw_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:listSelector="#e1f5fe" />
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/manage_menu" />
+</androidx.drawerlayout.widget.DrawerLayout>

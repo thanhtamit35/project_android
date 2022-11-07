@@ -13,9 +13,11 @@
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/round_back_white10.xml" value="0.118" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/round_back_white20.xml" value="0.118" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/font/poppins_medium.xml" value="0.19907407407407407" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_about.xml" value="0.24010416666666667" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_add_new_question.xml" value="0.24010416666666667" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_add_new_topic.xml" value="0.24010416666666667" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_admin.xml" value="0.24010416666666667" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_history.xml" value="0.2" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_manage_question.xml" value="0.25416666666666665" />
@@ -28,6 +30,7 @@
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_start_quiz.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/card_item.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/item.xml" value="0.4" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/item_history.xml" value="0.253125" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/item_question.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/menu/drawer_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/menu/manage_menu.xml" value="0.25416666666666665" />

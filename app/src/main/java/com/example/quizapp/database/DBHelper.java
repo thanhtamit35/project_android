@@ -194,6 +194,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return topics;
     }
 
+    /**
+     * Get topic by id
+     *
+     * @param id
+     * @return
+     */
     public Topic getTopicById(int id) {
         String sql = "SELECT * FROM tbl_topic WHERE idTopic = " + id;
         Cursor cursor = getReadableDatabase().rawQuery(sql, null);
@@ -210,6 +216,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return topic;
     }
 
+    /**
+     * Get all question by id topic
+     *
+     * @param id id topic
+     * @return List question by id topic
+     */
     public List<Question> getQuestionByIdTopic(int id) {
         // ORDER BY random() LIMIT 5;
         String sql = "SELECT * FROM tbl_question WHERE idTopic = " + id;
@@ -233,6 +245,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return questions;
     }
 
+    /**
+     * Get all name of topic in tbl_topic
+     *
+     * @return list name topic
+     */
     public List<String> getNameTopic() {
         String sql = "SELECT nameTopic FROM tbl_topic";
         Cursor cursor = getReadableDatabase().rawQuery(sql, null);
@@ -246,6 +263,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return topics;
     }
 
+    /**
+     * Insert data to tbl_topic
+     *
+     * @param nameTopic  name of topic
+     * @param imageBytes byte array of image topic
+     */
     public void insertTopic(String nameTopic, byte[] imageBytes) {
         ContentValues cv = new ContentValues();
         cv.put("nameTopic", nameTopic);
@@ -288,6 +311,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return question;
     }
 
+    /**
+     * Method insert new question to tbl_question
+     *
+     * @param question - object Question
+     * @return true if insert success, false if insert fail
+     */
     public boolean addNewQuestion(Question question) {
         try {
             String insert = "INSERT INTO tbl_question VALUES(NULL, " +
@@ -307,6 +336,12 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Method get id quiz by nameQuiz
+     *
+     * @param nameQuiz - name of quiz
+     * @return id of quiz
+     */
     public int getIdQuiz(String nameQuiz) {
         int id = 0;
 
@@ -320,6 +355,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public String getNameQuiz(int id) {
+        String nameQuiz = "";
+
+        String sql = "SELECT namQuiz FROM tbl_quiz WHERE idQuiz =" + id;
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+
+        while (cursor.moveToNext()) {
+            nameQuiz = cursor.getString(0);
+        }
+
+        return nameQuiz;
+    }
+
     public void insertQuiz(Quiz quiz) {
         try {
             String insert = "INSERT INTO tbl_quiz VALUES(NULL, '" + quiz.getNameQuiz() + "', " + quiz.getScore() + ")";
@@ -330,13 +378,23 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertQuizQuestion(QuizQuestion quizQuestion){
+    /**
+     * Method insert data to tbl_quiz_question
+     *
+     * @param quizQuestion - Object QuizQuestion
+     */
+    public void insertQuizQuestion(QuizQuestion quizQuestion) {
         ContentValues cv = new ContentValues();
         cv.put("idQuiz", quizQuestion.getIdQuiz());
         cv.put("idQuestion", quizQuestion.getIdQuestion());
         getWritableDatabase().insert("tbl_quiz_question", null, cv);
     }
 
+    /**
+     * Method insert data to tbl_history
+     *
+     * @param history - object History
+     */
     public void insertHistory(History history) {
         try {
             String insert = "INSERT INTO tbl_history VALUES(NULL, " + history.getIdAcc() + ", " + history.getIdQuiz() + ")";
@@ -344,6 +402,73 @@ public class DBHelper extends SQLiteOpenHelper {
             execsSQL(insert);
         } catch (Exception e) {
             Log.e("Insert fail!", e.getMessage());
+        }
+    }
+
+    /**
+     * Method get all result test by userName
+     *
+     * @param userName - userName account of user
+     * @return list result
+     */
+    public List<Quiz> getResultByUser(String userName) {
+        String sql = "SELECT tbl_history.idQuiz, tbl_quiz.nameQuiz, tbl_quiz.score\n" +
+                "FROM tbl_history\n" +
+                "INNER JOIN tbl_account ON tbl_account.userName = '" + userName + "'\n" +
+                "INNER JOIN tbl_quiz ON tbl_quiz.idQuiz = tbl_history.idQuiz\n" +
+                "ORDER BY tbl_quiz.score DESC";
+
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        List<Quiz> quizzes = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            int idQuiz = cursor.getInt(0);
+            String nameQuiz = cursor.getString(1);
+            int score = cursor.getInt(2);
+
+            Quiz quiz = new Quiz(idQuiz, nameQuiz, score);
+            quizzes.add(quiz);
+        }
+
+        return quizzes;
+    }
+
+    public boolean deleteHistory(int idAcc) {
+        try {
+            String sql = "DELETE FROM tbl_history WHERE tbl_history.idAcc = " + idAcc + ";\n";
+
+            execsSQL(sql);
+
+            return true;
+        } catch (Exception e) {
+            Log.e("Delete fail!", e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean deleteQuizQuestion(int idQuiz) {
+        try {
+            String sql = "DELETE FROM tbl_quiz_question WHERE tbl_quiz_question.idQuiz = " + idQuiz + ";\n";
+
+            execsSQL(sql);
+
+            return true;
+        } catch (Exception e) {
+            Log.e("Delete fail!", e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean deleteQuiz(int idQuiz) {
+        try {
+            String sql = "DELETE FROM tbl_quiz WHERE tbl_quiz.idQuiz = " + idQuiz + ";\n";
+
+            execsSQL(sql);
+
+            return true;
+        } catch (Exception e) {
+            Log.e("Delete fail!", e.getMessage());
+            return false;
         }
     }
 }

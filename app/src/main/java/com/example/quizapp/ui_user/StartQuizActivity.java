@@ -21,20 +21,19 @@ import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
 import com.example.quizapp.model.QuizQuestion;
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
+import java.util.Objects;
 
 public class StartQuizActivity extends AppCompatActivity {
     DBHelper dbHelper = new DBHelper(this);
     List<Question> questionList;
     SharedPreferences sharedPreferences;
-    boolean isBack = false;
+    CountDownTimer countDownTimer;
 
     private int currentQuestionPosition = 0;
 
@@ -61,16 +60,18 @@ public class StartQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_quiz);
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
         sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
-
         mapping();
-
         startTimer();
-
         addActions();
     }
 
+    /**
+     * Method add action of buttons
+     */
     private void addActions() {
+//        TODO: event click button option 1
         option1.setOnClickListener(v -> {
 
             // check if user has not attempted this question yet
@@ -87,7 +88,7 @@ public class StartQuizActivity extends AppCompatActivity {
                 revealAnswer();
             }
         });
-
+//        TODO: event click button option 2
         option2.setOnClickListener(v -> {
 
             // check if user has not attempted this question yet
@@ -105,7 +106,7 @@ public class StartQuizActivity extends AppCompatActivity {
                 revealAnswer();
             }
         });
-
+//        TODO: event click button option 3
         option3.setOnClickListener(v -> {
 
             // check if user has not attempted this question yet
@@ -122,7 +123,7 @@ public class StartQuizActivity extends AppCompatActivity {
                 revealAnswer();
             }
         });
-
+//        TODO: event click button option 4
         option4.setOnClickListener(v -> {
 
             // check if user has not attempted this question yet
@@ -139,15 +140,15 @@ public class StartQuizActivity extends AppCompatActivity {
                 revealAnswer();
             }
         });
-
+//        TODO: event click button back
         btnBack.setOnClickListener(v -> {
             // open StartActivity.java
+            countDownTimer.cancel();
             startActivity(new Intent(getApplicationContext(), SelectTopicActivity.class));
             this.finish(); // finish(destroy) this activity
         });
-
+//        TODO: event click button next
         btnNext.setOnClickListener(v -> {
-
             // check if user has not selected any option yet
             if (selectedOptionByUser.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please select an option", Toast.LENGTH_SHORT).show();
@@ -157,6 +158,9 @@ public class StartQuizActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method mapping components and display question to components
+     */
     @SuppressLint("SetTextI18n")
     private void mapping() {
         twQuestions = findViewById(R.id.tw_questions);
@@ -181,58 +185,35 @@ public class StartQuizActivity extends AppCompatActivity {
         option4.setText(questionList.get(currentQuestionPosition).getOption4());
     }
 
+    /**
+     * Method count down timer when user do test
+     */
     private void startTimer() {
-        new CountDownTimer(60000, 1000) {
+        countDownTimer = new CountDownTimer(60000, 1000) {
 
             @SuppressLint("SetTextI18n")
             public void onTick(long millisUntilFinished) {
 
-                // Used for formatting digit to be in 2 digits only
-
+//                TODO: if the user has done all the questions then stop the countdown
                 if (currentQuestionPosition >= questionList.size()) {
                     cancel();
                 }
 
+//                TODO: format time countdown
                 NumberFormat f = new DecimalFormat("00");
-
                 long min = (millisUntilFinished / 60000) % 60;
-
                 long sec = (millisUntilFinished / 1000) % 60;
-
                 twTimer.setText(f.format(min) + ":" + f.format(sec));
-
             }
 
-            // When the task is over it will print 00:00 there
-
+            //            TODO: finish countdown
             public void onFinish() {
                 AlertDialog.Builder builder = new AlertDialog.Builder(StartQuizActivity.this);
                 builder.setTitle("Hết giờ!!!!");
                 builder.setMessage("Bài test của bạn đã được ghi nhận. Xem kết quả ngay?");
+                cancel();
                 builder.setPositiveButton("Có" + score, (dialogInterface, i1) -> {
-
-//                    TODO: insert data to tbl_quiz when over time
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
-                    score = getCorrectAnswers() * 10;
-                    String currentDateTime = "Test" + sdf.format(new Date());
-
-                    Quiz quiz = new Quiz(0, currentDateTime, score);
-                    dbHelper.insertQuiz(quiz);
-                    idQuiz = dbHelper.getIdQuiz(currentDateTime);
-
-//                    TODO: insert data to tbl_quiz_question
-                    insertToQuizQuestion(questionList, idQuiz);
-
-//                  TODO:  Open result activity when over time
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("correct", getCorrectAnswers());
-                    bundle.putSerializable("incorrect", getIncorrectAnswers());
-                    bundle.putSerializable("score", score);
-                    Intent intent = new Intent(StartQuizActivity.this, ResultActivity.class);
-                    intent.putExtra("bundle", bundle);
-                    startActivity(intent);
-                    cancel();
-                    finish();
+                    openResult();
                 });
 
                 builder.setNegativeButton("Không", (dialogInterface, i1) -> {
@@ -309,32 +290,36 @@ public class StartQuizActivity extends AppCompatActivity {
             option3.setText(questionList.get(currentQuestionPosition).getOption3());
             option4.setText(questionList.get(currentQuestionPosition).getOption4());
         } else {
-           openResult();
+            openResult();
         }
     }
 
-    private void openResult(){
+    /**
+     * Method open result activity and insert data to tbl_quiz, tbl_question_quiz, and tbl_history
+     */
+    private void openResult() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMMyyyyHH:mm:ss Z");
-
-        // on below line we are creating a variable
-        // for current date and time and calling a simple date format in it.
+//        TODO: calculate score = 10 * number of correct answer
         score = getCorrectAnswers() * 10;
         String currentDateTime = "Test" + sdf.format(new Date());
 
 //            TODO: insert quiz to tbl_quiz
         Quiz quiz = new Quiz(0, currentDateTime, score);
         dbHelper.insertQuiz(quiz);
+
+//        TODO: get id quiz and id account
         idQuiz = dbHelper.getIdQuiz(currentDateTime);
         String userName = sharedPreferences.getString("userName", null);
         Account acc = dbHelper.getAccount(userName);
         int idUser = acc.getIdAcc();
+//        TODO: insert data to tbl_history
         History history = new History(0, idUser, idQuiz);
         dbHelper.insertHistory(history);
 
 //            TODO: insert data to tbl_quiz_question
         insertToQuizQuestion(questionList, idQuiz);
 
-        // Open result activity along with correct and incorrect answers
+//        TODO: send data to result activity to display
         Bundle bundle = new Bundle();
         bundle.putInt("correct", getCorrectAnswers());
         bundle.putInt("incorrect", getIncorrectAnswers());
@@ -343,7 +328,7 @@ public class StartQuizActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
 
-        // finish(destroy) this activity
+//        TODO: finish this activity
         finish();
     }
 

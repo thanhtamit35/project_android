@@ -10,15 +10,15 @@
         android:icon="@drawable/ic_baseline_not_started_24"
         android:title="Start quiz" />
 
-    <item
-        android:id="@+id/mnu_setting"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Setting" />
+<!--    <item-->
+<!--        android:id="@+id/mnu_setting"-->
+<!--        android:icon="@drawable/ic_baseline_settings_24"-->
+<!--        android:title="Setting" />-->
 
-    <item
-        android:id="@+id/mnu_docs"
-        android:icon="@drawable/ic_baseline_file_download_24"
-        android:title="Docs" />
+<!--    <item-->
+<!--        android:id="@+id/mnu_docs"-->
+<!--        android:icon="@drawable/ic_baseline_file_download_24"-->
+<!--        android:title="Docs" />-->
 
     <item
         android:id="@+id/mnu_history"
