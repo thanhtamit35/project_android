@@ -70,17 +70,25 @@ public class LoginActivity extends AppCompatActivity {
                 if (acc == null) {
                     Toast.makeText(this, "Tài khoản không tồn tại!", Toast.LENGTH_SHORT).show();
                 } else if (pass.equals(acc.getPassword()) && userName.equals(acc.getUserName())) {
+                    boolean isAdmin;
+
                     if (acc.getIdRole() == 1) {
                         finish();
                         startActivity(new Intent(this, AdminActivity.class));
                         editor.putString("adminName", acc.getUserName());
                         editor.putString("fullNameAdmin", acc.getFullName());
+                        isAdmin = true;
                     } else {
                         finish();
                         startActivity(new Intent(this, MainActivity.class));
                         editor.putString("userName", acc.getUserName());
                         editor.putString("fullName", acc.getFullName());
+
+                        isAdmin = false;
                     }
+
+                    editor.putBoolean("isAdmin", isAdmin);
+
                     Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Tài khoản hoặc mật khẩu không chính xác!", Toast.LENGTH_SHORT).show();

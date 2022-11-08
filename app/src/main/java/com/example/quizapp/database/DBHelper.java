@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "db_quiz_app.db";
+    private static final String DATABASE_NAME = "db_app.db";
     private static final int VERSION = 1;
     private static final String CREATE_TABLE_ROLE = "CREATE TABLE IF NOT EXISTS tbl_role("
             + "idRole INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -146,6 +146,23 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean updateAcc(Account acc) {
+        try {
+            String insert = "UPDATE tbl_account\n" +
+                    "SET fullName = '" + acc.getFullName() + "',\n" +
+                    "password = '" + acc.getPassword() + "'\n" +
+                    "WHERE idAcc = " + acc.getIdAcc() + ";";
+
+            execsSQL(insert);
+
+            return true;
+        } catch (Exception e) {
+            Log.e("Insert fail!", e.getMessage());
+            return false;
+        }
+    }
+
+
     public Topic getTopic(String topicName) {
         String sql = "SELECT * FROM tbl_topic WHERE nameTopic = '" + topicName + "'";
         Cursor cursor = getReadableDatabase().rawQuery(sql, null);
@@ -238,7 +255,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String option4 = cursor.getString(6);
             String ans = cursor.getString(7);
 
-            Question question = new Question(idQuestion, contentQues, idTopic, option1, option2, option3, option4, ans);
+            Question question = new Question(idQuestion,  idTopic,contentQues, option1, option2, option3, option4, ans);
             questions.add(question);
         }
 
@@ -305,7 +322,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String option4 = cursor.getString(6);
             String ans = cursor.getString(7);
 
-            question = new Question(idQuestion, contentQues, idTopic, option1, option2, option3, option4, ans);
+            question = new Question(idQuestion,  idTopic,contentQues, option1, option2, option3, option4, ans);
         }
 
         return question;
@@ -320,8 +337,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean addNewQuestion(Question question) {
         try {
             String insert = "INSERT INTO tbl_question VALUES(NULL, " +
-                    "'" + question.getContent() + "', " +
                     "" + question.getIdTopic() + ", " +
+                    "'" + question.getContent() + "', " +
                     "'" + question.getOption1() + "', " +
                     "'" + question.getOption2() + "', " +
                     "'" + question.getOption3() + "', " +
@@ -376,6 +393,34 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e("Insert fail!", e.getMessage());
         }
+    }
+
+    /**
+     * Method get all record from table tbl_question
+     *
+     * @return list question
+     */
+    public List<Question> getAllQuestion() {
+        List<Question> questions = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_question";
+
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            int idTopic = cursor.getInt(1);
+            String content = cursor.getString(2);
+            String option1 = cursor.getString(3);
+            String option2 = cursor.getString(4);
+            String option3 = cursor.getString(5);
+            String option4 = cursor.getString(6);
+            String answer = cursor.getString(7);
+
+            Question question = new Question(id,  idTopic, content,option1, option2, option3, option4, answer);
+            questions.add(question);
+        }
+
+        return questions;
     }
 
     /**

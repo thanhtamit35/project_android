@@ -41,11 +41,11 @@ public class AdminActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
         TextView twWelcome = findViewById(R.id.tw_welcome);
-        twWelcome.setText("Welcome, " + sharedPreferences.getString("adminName", null));
+        twWelcome.setText("Welcome, " + sharedPreferences.getString("fullNameAdmin", null));
 
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
-        navUsername.setText("Hello, " + sharedPreferences.getString("adminName", null));
+        navUsername.setText("Hi, " + sharedPreferences.getString("fullNameAdmin", null));
 
         MaterialButton btnEditAcc = (MaterialButton) headerView.findViewById(R.id.btn_edit_account);
         btnEditAcc.setOnClickListener(view -> {

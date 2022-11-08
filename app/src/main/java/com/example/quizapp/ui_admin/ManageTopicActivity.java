@@ -1,13 +1,17 @@
 package com.example.quizapp.ui_admin;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -16,10 +20,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.quizapp.EditInfoActivity;
 import com.example.quizapp.R;
 import com.example.quizapp.adapter.TopicAdapter;
 import com.example.quizapp.database.DBHelper;
 import com.example.quizapp.model.Topic;
+import com.example.quizapp.ui_user.LoginActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -31,6 +37,7 @@ public class ManageTopicActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    SharedPreferences sharedPreferences;
     TopicAdapter adapter;
     List<Topic> topics;
     List<Topic> topicFiltered;
@@ -55,6 +62,7 @@ public class ManageTopicActivity extends AppCompatActivity {
         addActions();
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void createActionbar() {
         // Define ActionBar object
         ActionBar actionBar;
@@ -98,6 +106,10 @@ public class ManageTopicActivity extends AppCompatActivity {
                 case R.id.mnu_question:
                     startActivity(new Intent(this, ManageQuestionActivity.class));
                     break;
+                case R.id.mnu_logout:
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                    break;
             }
 
             return true;
@@ -123,6 +135,17 @@ public class ManageTopicActivity extends AppCompatActivity {
         listView = findViewById(R.id.lvw_list);
         edtSearch = findViewById(R.id.edt_search);
         btnAdd = findViewById(R.id.btn_add_new_topic);
+
+        sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
+        navUsername.setText("Hi, " + sharedPreferences.getString("fullNameAdmin", null));
+
+        MaterialButton btnEditAcc = (MaterialButton) headerView.findViewById(R.id.btn_edit_account);
+        btnEditAcc.setOnClickListener(view -> {
+            startActivity(new Intent(this, EditInfoActivity.class));
+            finish();
+        });
     }
 
     private List<Topic> getAll() {

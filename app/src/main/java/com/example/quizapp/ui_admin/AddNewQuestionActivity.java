@@ -1,7 +1,6 @@
 package com.example.quizapp.ui_admin;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -15,9 +14,8 @@ import com.example.quizapp.model.Question;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.security.PrivateKey;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AddNewQuestionActivity extends AppCompatActivity {
 
@@ -32,6 +30,7 @@ public class AddNewQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_question);
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         mapping();
         addActions();
@@ -48,8 +47,8 @@ public class AddNewQuestionActivity extends AppCompatActivity {
 
             if (!content.isEmpty() && !op1.isEmpty() && !op2.isEmpty() && !op3.isEmpty() && !op4.isEmpty()) {
                 if (dbHelper.getQuestion(content) == null) {
-                    Question question = new Question(0, content, idTopic, op1, op2, op3, op4, ans);
-                    Toast.makeText(this, ans, Toast.LENGTH_SHORT).show();
+                    Question question = new Question(0, idTopic, content, op1, op2, op3, op4, ans);
+
                     boolean res = dbHelper.addNewQuestion(question);
 
                     String msg = (res) ? "Thêm mới thành công!" : "Thêm mới thất bại!";

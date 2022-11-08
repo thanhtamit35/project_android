@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class Question implements Serializable {
     private int idQuestion;
-    private String content;
     private int idTopic;
+    private String content;
     private String option1;
     private String option2;
     private String option3;
     private String option4;
     private String answer;
 
-    public Question(int idQuestion, String content, int idTopic, String option1, String option2, String option3, String option4, String answer) {
+    public Question(int idQuestion,int idTopic,  String content, String option1, String option2, String option3, String option4, String answer) {
         this.idQuestion = idQuestion;
-        this.content = content;
         this.idTopic = idTopic;
+        this.content = content;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;

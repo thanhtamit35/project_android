@@ -54,11 +54,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="Password"
+                android:hint="Old password"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_pass_edit"
+                    android:id="@+id/edt_old_pass_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="New Password"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_new_pass_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -87,6 +108,30 @@
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.cardview.widget.CardView>
 
+        <RadioGroup
+            android:id="@+id/rdo_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/radio_button_1">
+
+            <RadioButton
+                android:id="@+id/rdo_change_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginEnd="10dp"
+                android:text="Change name" />
+
+            <RadioButton
+                android:id="@+id/rdo_change_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Change pass word" />
+        </RadioGroup>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,6 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#35589A"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Allow Editing" />
 
             <com.google.android.material.button.MaterialButton
@@ -107,13 +153,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:backgroundTint="#65C18C"
+                android:enabled="false"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Save" />
 
             <com.google.android.material.button.MaterialButton
-                android:backgroundTint="#E02401"
                 android:id="@+id/btn_cancel_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#E02401"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Cancel" />
         </LinearLayout>
     </LinearLayout>

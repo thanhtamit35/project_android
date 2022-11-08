@@ -3,16 +3,12 @@ package com.example.quizapp.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -21,7 +17,6 @@ import com.example.quizapp.database.DBHelper;
 import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Topic;
 import com.example.quizapp.ui_admin.UpdateQuestionActivity;
-import com.example.quizapp.ui_admin.UpdateTopicActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
@@ -30,6 +25,7 @@ public class QuestionAdapter extends BaseAdapter {
     Context context;
     int layout;
     List<Question> questions;
+    DBHelper dbHelper;
 
     public QuestionAdapter(Context context, int layout, List<Question> questions) {
         this.context = context;
@@ -60,18 +56,19 @@ public class QuestionAdapter extends BaseAdapter {
         TextView twName = view.findViewById(R.id.tw_name_question);
         TextView twTopic = view.findViewById(R.id.tw_topic_name_question);
 
+        dbHelper = new DBHelper(view.getContext());
+
         Question question = questions.get(i);
         twName.setText("Question: " + question.getContent());
-        DBHelper dbHelper = new DBHelper(context);
-        Topic topic = dbHelper.getTopicById(question.getIdTopic());
-        twTopic.setText("Topic: "+topic.getNameTopic());
+        Topic topic = dbHelper.getTopicById(questions.get(i).getIdTopic());
+        twTopic.setText(topic.getNameTopic());
 
         MaterialButton btnEdit = view.findViewById(R.id.btn_edit_ques);
         btnEdit.setTag(i);
         MaterialButton btnDel = view.findViewById(R.id.btn_del_ques);
         btnDel.setTag(i);
 
-        btnEdit.setOnClickListener(v ->{
+        btnEdit.setOnClickListener(v -> {
             int position = (int) v.getTag();
             Question ques = questions.get(position);
 

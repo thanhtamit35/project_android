@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         welcome.setText("Welcome, " + sharedPreferences.getString("fullName", null));
 
         View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
-        navUsername.setText("Hello, " + sharedPreferences.getString("fullName", null));
+        TextView navUsername = headerView.findViewById(R.id.tw_full_name);
+        navUsername.setText("Hi, " + sharedPreferences.getString("fullName", null));
 
         MaterialButton btnEditAcc = (MaterialButton) headerView.findViewById(R.id.btn_edit_account);
         btnEditAcc.setOnClickListener(view -> {
