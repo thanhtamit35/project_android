@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginVertical="8dp"
+            android:fontFamily="@font/poppins_medium"
             android:text="DANH SÁCH TOPIC"
             android:textAlignment="center"
             android:textColor="#43a047"
@@ -46,6 +47,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_search"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/poppins_medium"
                 android:layout_height="wrap_content"
                 android:inputType="textPhonetic" />
 
@@ -55,6 +57,7 @@
             android:id="@+id/lvw_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_marginTop="15dp"
             android:listSelector="#e1f5fe" />
 

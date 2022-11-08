@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.quizapp.EditInfoActivity;
 import com.example.quizapp.R;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -40,14 +43,23 @@ public class MainActivity extends AppCompatActivity {
         TextView welcome = findViewById(R.id.tw_welcome);
         welcome.setText("Welcome, " + sharedPreferences.getString("fullName", null));
 
-        findViewById(R.id.btn_start_now).setOnClickListener(view -> {
-            startActivity(new Intent(this, SelectTopicActivity.class));
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
+        navUsername.setText("Hello, " + sharedPreferences.getString("fullName", null));
+
+        MaterialButton btnEditAcc = (MaterialButton) headerView.findViewById(R.id.btn_edit_account);
+        btnEditAcc.setOnClickListener(view -> {
+            startActivity(new Intent(this, EditInfoActivity.class));
+            finish();
         });
+
+        findViewById(R.id.btn_start_now).setOnClickListener(view -> startActivity(new Intent(this, SelectTopicActivity.class)));
     }
 
     /**
      * Method create actionbar
      */
+    @SuppressLint("NonConstantResourceId")
     private void createActionBar() {
         // Define ActionBar object
         ActionBar actionBar;
@@ -61,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 = new ColorDrawable(Color.parseColor("#00c853"));
 
         // Set BackgroundDrawable
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(colorDrawable);
 
         // drawer layout instance to toggle the menu icon to open
@@ -85,17 +98,25 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.mnu_home:
+                    finish();
                     startActivity(new Intent(this, MainActivity.class));
                     break;
                 case R.id.mnu_start_quiz:
+                    finish();
                     startActivity(new Intent(this, SelectTopicActivity.class));
                     break;
                 case R.id.mnu_history:
+                    finish();
                     startActivity(new Intent(this, HistoryActivity.class));
                     break;
-//                case R.id.mnu_setting:
-//                    replaceFragment(new SettingFragment());
-//                    break;
+                case R.id.mnu_about_us:
+                    finish();
+                    startActivity(new Intent(this, AboutActivity.class));
+                    break;
+                case R.id.mnu_logout:
+                    finish();
+                    startActivity(new Intent(this, LoginActivity.class));
+                    break;
             }
 
             return true;

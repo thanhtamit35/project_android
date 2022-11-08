@@ -2,8 +2,10 @@ package com.example.quizapp.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.example.quizapp.R;
 import com.example.quizapp.database.DBHelper;
 import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Topic;
+import com.example.quizapp.ui_admin.UpdateQuestionActivity;
+import com.example.quizapp.ui_admin.UpdateTopicActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
@@ -60,15 +66,45 @@ public class QuestionAdapter extends BaseAdapter {
         Topic topic = dbHelper.getTopicById(question.getIdTopic());
         twTopic.setText("Topic: "+topic.getNameTopic());
 
-
-        MaterialButton btnDel = view.findViewById(R.id.btn_del);
+        MaterialButton btnEdit = view.findViewById(R.id.btn_edit_ques);
+        btnEdit.setTag(i);
+        MaterialButton btnDel = view.findViewById(R.id.btn_del_ques);
         btnDel.setTag(i);
 
+        btnEdit.setOnClickListener(v ->{
+            int position = (int) v.getTag();
+            Question ques = questions.get(position);
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", ques);
+            Intent intent = new Intent(context, UpdateQuestionActivity.class);
+            intent.putExtra("bundle", bundle);
+            context.startActivity(intent);
+        });
+
         btnDel.setOnClickListener(v -> {
-            int positionToRemove = (int)v.getTag(); //get the position of the view to delete stored in the tag
-//            removeItem(positionToRemove);
+            int positionToRemove = (int) v.getTag(); //get the position of the view to delete stored in the tag
+            Question ques = questions.get(positionToRemove);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Xác nhận xoá");
+            builder.setMessage("Bạn có thật sự muốn xoá question \"" + questions.get(i).getContent() + "\" không?");
+            builder.setPositiveButton("Có", (dialogInterface, i1) -> {
+//                TODO: delete data in database -> delete item in listView
+
+
+//            TODO: remove data by id topic in database
+
+
+//            TODO: remove item in adapter
+//            questions.remove(positionToRemove);
 //            notifyDataSetChanged(); //remove the item
-            Toast.makeText(context, positionToRemove + "", Toast.LENGTH_SHORT).show();
+            });
+
+            builder.setNegativeButton("Không", (dialogInterface, i1) -> {
+            });
+
+            builder.show();
         });
 
         return view;

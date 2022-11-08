@@ -94,7 +94,6 @@ public class AddNewQuestionActivity extends AppCompatActivity {
 //        TODO: create data for AutoCompleteTextView
         List<String> listTopic;
         listTopic = dbHelper.getNameTopic();
-
         ArrayAdapter<String> adapterTopic = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listTopic);
         ArrayAdapter<String> adapterAns = new ArrayAdapter<>
                 (this, android.R.layout.simple_list_item_1, answers);

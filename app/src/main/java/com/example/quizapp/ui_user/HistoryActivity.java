@@ -7,8 +7,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -42,12 +44,16 @@ public class HistoryActivity extends AppCompatActivity {
     ListView listView;
     DBHelper dbHelper = new DBHelper(this);
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
         createActionBar();
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
+        navUsername.setText("Hello, " + sharedPreferences.getString("fullName", null));
         init();
     }
 
@@ -93,16 +99,24 @@ public class HistoryActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.mnu_home:
-                    startActivity(new Intent(this, MainActivity.class));
                     finish();
+                    startActivity(new Intent(this, MainActivity.class));
                     break;
                 case R.id.mnu_start_quiz:
-                    startActivity(new Intent(this, SelectTopicActivity.class));
                     finish();
+                    startActivity(new Intent(this, SelectTopicActivity.class));
                     break;
                 case R.id.mnu_history:
-                    startActivity(new Intent(this, HistoryActivity.class));
                     finish();
+                    startActivity(new Intent(this, HistoryActivity.class));
+                    break;
+                case R.id.mnu_about_us:
+                    finish();
+                    startActivity(new Intent(this, AboutActivity.class));
+                    break;
+                case R.id.mnu_logout:
+                    finish();
+                    startActivity(new Intent(this, LoginActivity.class));
                     break;
             }
 

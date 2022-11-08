@@ -1,4 +1,11 @@
-package com.example.quizapp.ui_admin;
+package com.example.quizapp;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,52 +17,46 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.example.quizapp.EditInfoActivity;
-import com.example.quizapp.R;
+import com.example.quizapp.ui_user.AboutActivity;
+import com.example.quizapp.ui_user.HistoryActivity;
 import com.example.quizapp.ui_user.LoginActivity;
-import com.google.android.material.button.MaterialButton;
+import com.example.quizapp.ui_user.MainActivity;
+import com.example.quizapp.ui_user.SelectTopicActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class AdminActivity extends AppCompatActivity {
+public class EditInfoActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
 
-    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_edit_info);
 
-        createActionbar();
+        createActionBar();
 
         sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
-        TextView twWelcome = findViewById(R.id.tw_welcome);
-        twWelcome.setText("Welcome, " + sharedPreferences.getString("adminName", null));
 
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
-        navUsername.setText("Hello, " + sharedPreferences.getString("adminName", null));
+        navUsername.setText("Hello, " + sharedPreferences.getString("fullName", null));
 
-        MaterialButton btnEditAcc = (MaterialButton) headerView.findViewById(R.id.btn_edit_account);
-        btnEditAcc.setOnClickListener(view -> {
+        headerView.findViewById(R.id.btn_edit_account).setOnClickListener(view -> {
             startActivity(new Intent(this, EditInfoActivity.class));
             finish();
         });
     }
 
+    /**
+     * Method create actionbar
+     */
     @SuppressLint("NonConstantResourceId")
-    private void createActionbar(){
+    private void createActionBar() {
         // Define ActionBar object
         ActionBar actionBar;
         actionBar = getSupportActionBar();
@@ -92,19 +93,25 @@ public class AdminActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
 
             switch (item.getItemId()) {
-                case R.id.mnu_topic:
-                    startActivity(new Intent(this, ManageTopicActivity.class));
+                case R.id.mnu_home:
                     finish();
+                    startActivity(new Intent(this, MainActivity.class));
                     break;
-
-                case R.id.mnu_question:
-                    startActivity(new Intent(this, ManageQuestionActivity.class));
+                case R.id.mnu_start_quiz:
                     finish();
+                    startActivity(new Intent(this, SelectTopicActivity.class));
                     break;
-
+                case R.id.mnu_history:
+                    finish();
+                    startActivity(new Intent(this, HistoryActivity.class));
+                    break;
+                case R.id.mnu_about_us:
+                    finish();
+                    startActivity(new Intent(this, AboutActivity.class));
+                    break;
                 case R.id.mnu_logout:
-                    startActivity(new Intent(this, LoginActivity.class));
                     finish();
+                    startActivity(new Intent(this, LoginActivity.class));
                     break;
             }
 

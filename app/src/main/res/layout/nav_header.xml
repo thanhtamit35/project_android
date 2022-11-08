@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingVertical="16dp"
+    android:paddingStart="16dp"
+    android:background="@drawable/round_back_white10"
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/user"/>
+
+    <TextView
+        android:id="@+id/tw_full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginHorizontal="12dp"
+        android:textColor="#001253"
+        android:fontFamily="@font/poppins_medium"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:tooltipText="Edit"
+        app:iconTint="#003865"
+        app:icon="@drawable/ic_baseline_edit_24"/>
+
+</LinearLayout>

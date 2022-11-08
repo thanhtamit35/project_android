@@ -2,13 +2,16 @@ package com.example.quizapp.ui_user;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.GridView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -29,17 +32,24 @@ import java.util.Objects;
 public class SelectTopicActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
+    SharedPreferences sharedPreferences;
     NavigationView navigationView;
     GridView gridView;
     List<Topic> topics;
     Adapter adapter;
     DBHelper dbHelper = new DBHelper(this);
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_topic);
         createActionBar();
+        sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
+        navUsername.setText("Hello, " + sharedPreferences.getString("fullName", null));
         init();
         addActions();
     }
@@ -86,16 +96,24 @@ public class SelectTopicActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.mnu_home:
-                    startActivity(new Intent(this, MainActivity.class));
                     finish();
+                    startActivity(new Intent(this, MainActivity.class));
                     break;
                 case R.id.mnu_start_quiz:
-                    startActivity(new Intent(this, SelectTopicActivity.class));
                     finish();
+                    startActivity(new Intent(this, SelectTopicActivity.class));
                     break;
                 case R.id.mnu_history:
-                    startActivity(new Intent(this, HistoryActivity.class));
                     finish();
+                    startActivity(new Intent(this, HistoryActivity.class));
+                    break;
+                case R.id.mnu_about_us:
+                    finish();
+                    startActivity(new Intent(this, AboutActivity.class));
+                    break;
+                case R.id.mnu_logout:
+                    finish();
+                    startActivity(new Intent(this, LoginActivity.class));
                     break;
             }
 

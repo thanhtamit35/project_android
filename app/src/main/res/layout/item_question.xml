@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="8"
+        android:layout_weight="8.25"
         android:orientation="horizontal">
 
         <ImageView
@@ -34,6 +34,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="10dp"
                 android:text="Name question"
+                android:fontFamily="@font/poppins_medium"
                 android:textColor="#2e7d32"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:text="Topic"
+                android:fontFamily="@font/poppins_medium"
                 android:textSize="15sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -52,12 +54,12 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1.75"
         android:gravity="center"
         android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_edit"
+            android:id="@+id/btn_edit_ques"
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +70,7 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_del"
+            android:id="@+id/btn_del_ques"
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

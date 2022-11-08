@@ -41,9 +41,9 @@ public class DBHelper extends SQLiteOpenHelper {
             "\t\"idQuestion\"\tINTEGER PRIMARY KEY AUTOINCREMENT," +
             "\t\"idTopic\"\tINTEGER NOT NULL,\n" +
             "\t\"content\"\tTEXT NOT NULL UNIQUE,\n" +
-            "\t\"option1\"\tTEXT NOT NULL UNIQUE,\n" +
-            "\t\"option2\"\tTEXT NOT NULL UNIQUE,\n" +
-            "\t\"option3\"\tTEXT NOT NULL UNIQUE,\n" +
+            "\t\"option1\"\tTEXT NOT NULL,\n" +
+            "\t\"option2\"\tTEXT NOT NULL,\n" +
+            "\t\"option3\"\tTEXT NOT NULL,\n" +
             "\t\"option4\"\tTEXT NOT NULL,\n" +
             "\t\"answer\"\tTEXT NOT NULL,\n" +
             "\tCONSTRAINT \"fk_id_topic\" FOREIGN KEY(\"idTopic\") REFERENCES tbl_topic(\"idTopic\")\n" +

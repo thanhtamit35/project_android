@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/mnu_home"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mnu_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="@string/mnu_home_user" />
 
-    <item
-        android:id="@+id/mnu_start_quiz"
-        android:icon="@drawable/ic_baseline_not_started_24"
-        android:title="Start quiz" />
+        <item
+            android:id="@+id/mnu_start_quiz"
+            android:icon="@drawable/ic_baseline_not_started_24"
+            android:title="@string/mnu_start_quiz" />
 
-<!--    <item-->
-<!--        android:id="@+id/mnu_setting"-->
-<!--        android:icon="@drawable/ic_baseline_settings_24"-->
-<!--        android:title="Setting" />-->
+        <item
+            android:id="@+id/mnu_history"
+            android:icon="@drawable/ic_baseline_history_24"
+            android:title="@string/mnu_history" />
 
-<!--    <item-->
-<!--        android:id="@+id/mnu_docs"-->
-<!--        android:icon="@drawable/ic_baseline_file_download_24"-->
-<!--        android:title="Docs" />-->
+        <item
+            android:id="@+id/mnu_about_us"
+            android:icon="@drawable/ic_baseline_info_24"
+            android:title="@string/mnu_about_us" />
+    </group>
 
-    <item
-        android:id="@+id/mnu_history"
-        android:icon="@drawable/ic_baseline_history_24"
-        android:title="History" />
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/mnu_logout"
+                android:icon="@drawable/ic_baseline_logout_24"
+                android:title="@string/mnu_log_out" />
+        </menu>
+    </item>
 
-    <item
-        android:id="@+id/mnu_logout"
-        android:icon="@drawable/ic_baseline_logout_24"
-        android:title="Log out" />
 </menu>

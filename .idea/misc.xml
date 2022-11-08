@@ -17,6 +17,7 @@
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_add_new_question.xml" value="0.24010416666666667" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_add_new_topic.xml" value="0.24010416666666667" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_admin.xml" value="0.24010416666666667" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_edit_info.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_history.xml" value="0.2" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
@@ -28,10 +29,13 @@
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_select_topic.xml" value="0.24010416666666667" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_start_quiz.xml" value="0.25416666666666665" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_update_question.xml" value="0.2" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_update_topic.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/card_item.xml" value="0.25416666666666665" />
-        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/item.xml" value="0.4" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/item.xml" value="0.264" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/item_history.xml" value="0.253125" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/item_question.xml" value="0.25416666666666665" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/nav_header.xml" value="0.2" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/menu/drawer_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/menu/manage_menu.xml" value="0.25416666666666665" />
       </map>

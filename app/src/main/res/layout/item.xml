@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="9"
+        android:layout_weight="8.25"
         android:orientation="horizontal">
 
         <ImageView
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/poppins_medium"
             android:text="Name topic"
             android:textColor="#2e7d32"
             android:textSize="22sp"
@@ -36,12 +37,12 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="1.75"
         android:gravity="center"
         android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_edit"
+            android:id="@+id/btn_edit_topic"
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

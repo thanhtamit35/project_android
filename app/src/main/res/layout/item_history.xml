@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="10dp"
+                android:fontFamily="@font/poppins_medium"
                 android:layout_marginTop="10dp"
                 android:text="Name test"
                 android:textColor="#003865"
@@ -42,6 +43,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="10dp"
                 android:text="Score"
+                android:fontFamily="@font/poppins_medium"
                 android:textColor="#FD841F"
                 android:textSize="15sp"
                 android:textStyle="bold" />

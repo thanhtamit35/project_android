@@ -69,12 +69,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (acc == null) {
                     Toast.makeText(this, "Tài khoản không tồn tại!", Toast.LENGTH_SHORT).show();
-                } else if(pass.equals(acc.getPassword()) && userName.equals(acc.getUserName())){
+                } else if (pass.equals(acc.getPassword()) && userName.equals(acc.getUserName())) {
                     if (acc.getIdRole() == 1) {
+                        finish();
                         startActivity(new Intent(this, AdminActivity.class));
                         editor.putString("adminName", acc.getUserName());
                         editor.putString("fullNameAdmin", acc.getFullName());
                     } else {
+                        finish();
                         startActivity(new Intent(this, MainActivity.class));
                         editor.putString("userName", acc.getUserName());
                         editor.putString("fullName", acc.getFullName());
@@ -88,7 +90,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        twSignUp.setOnClickListener(view -> startActivity(new Intent(this, RegisterActivity.class)));
+        twSignUp.setOnClickListener(view ->
+        {
+            finish();
+            startActivity(new Intent(this, RegisterActivity.class));
+        });
     }
 
     private void mapping() {

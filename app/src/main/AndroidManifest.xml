@@ -17,7 +17,16 @@
         android:theme="@style/Theme.QuizApp"
         tools:targetApi="31">
         <activity
-            android:name=".AboutActivity"
+            android:name=".ui_admin.UpdateQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui_admin.UpdateTopicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui_user.AboutActivity"
             android:exported="false" />
         <activity
             android:name=".ui_user.HistoryActivity"

@@ -22,16 +22,6 @@
             app:icon="@drawable/ic_baseline_arrow_back_24"
             app:iconTint="@color/white" />
 
-        <TextView
-            android:id="@+id/topicName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Selected Topic Name"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,6 +41,7 @@
                 android:id="@+id/tw_timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
                 android:layout_marginStart="5dp"
                 android:text="00:59"
                 android:textColor="#FAA72F" />
@@ -68,6 +59,7 @@
         android:gravity="center"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
+        android:fontFamily="@font/poppins_medium"
         android:text="1/10"
         android:textColor="#1F6BB8" />
 
@@ -84,6 +76,7 @@
         android:padding="20dp"
         android:text="Question will come here..."
         android:textColor="#CC000000"
+        android:fontFamily="@font/poppins_medium"
         android:textSize="16sp" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -96,6 +89,7 @@
         android:background="@drawable/round_back_white_stroke2_10"
         android:text="Option 1"
         android:textAllCaps="false"
+        android:fontFamily="@font/poppins_medium"
         android:textColor="#1F6BB8" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -105,6 +99,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:fontFamily="@font/poppins_medium"
         android:background="@drawable/round_back_white_stroke2_10"
         android:text="Option 2"
         android:textAllCaps="false"
@@ -117,6 +112,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:fontFamily="@font/poppins_medium"
         android:background="@drawable/round_back_white_stroke2_10"
         android:text="Option 3"
         android:textAllCaps="false"
@@ -127,6 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
+        android:fontFamily="@font/poppins_medium"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/round_back_white_stroke2_10"
@@ -139,6 +136,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
+        android:fontFamily="@font/poppins_medium"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/round_back_green20"

@@ -33,12 +33,13 @@ public class AddNewTopicActivity extends AppCompatActivity {
     ImageView img;
     MaterialTextView twChooseImg;
     TextInputEditText edtNameTopic;
-    MaterialButton btnSave, btnCancel;
+    MaterialButton btnSave, btnCancel, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_topic);
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         mapping();
         addActions();
@@ -82,6 +83,7 @@ public class AddNewTopicActivity extends AppCompatActivity {
         });
 
         btnCancel.setOnClickListener(view -> startActivity(new Intent(this, ManageTopicActivity.class)));
+        btnBack.setOnClickListener(view -> startActivity(new Intent(this, ManageTopicActivity.class)));
     }
 
     private void mapping() {
@@ -90,6 +92,7 @@ public class AddNewTopicActivity extends AppCompatActivity {
         img = findViewById(R.id.img_topic);
         btnSave = findViewById(R.id.btn_add);
         btnCancel = findViewById(R.id.btn_cancel);
+        btnBack = findViewById(R.id.btn_back);
     }
 
     @Override

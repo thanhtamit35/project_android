@@ -2,4 +2,11 @@
     <string name="app_name">Quiz App</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="mnu_about_us">About us</string>
+    <string name="mnu_history">History</string>
+    <string name="mnu_start_quiz">Start quiz</string>
+    <string name="mnu_home_user">Home</string>
+    <string name="mnu_log_out">Log out</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
 </resources>
