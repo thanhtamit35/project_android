@@ -1,16 +1,16 @@
 package com.example.quizapp.ui_admin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quizapp.R;
 import com.example.quizapp.database.DBHelper;
 import com.example.quizapp.model.Question;
-import com.example.quizapp.model.Topic;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,6 +31,8 @@ public class UpdateQuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_question);
         Objects.requireNonNull(this.getSupportActionBar()).hide();
+        Bundle bundleQues = getIntent().getBundleExtra("bundle");
+        question = (Question) bundleQues.getSerializable("data");
 
         mapping();
         addActions();
@@ -39,7 +41,29 @@ public class UpdateQuestionActivity extends AppCompatActivity {
     private void addActions() {
 //        TODO: event btnSave click
         btnSave.setOnClickListener(view -> {
+            try {
+                String newContent = Objects.requireNonNull(txtContent.getText()).toString();
+                int idTopic = dbHelper.getIdTopic(atwTopic.getText().toString());
+                String option1 = Objects.requireNonNull(txtOption1.getText()).toString();
+                String option2 = Objects.requireNonNull(txtOption2.getText()).toString();
+                String option3 = Objects.requireNonNull(txtOption3.getText()).toString();
+                String option4 = Objects.requireNonNull(txtOption4.getText()).toString();
+                String answer = atwAnswer.getText().toString();
 
+                Question question1 = new Question(question.getIdQuestion(), idTopic, newContent, option1, option2, option3, option4, answer);
+
+                if (newContent.equals(question.getContent())) {
+                    dbHelper.updateInfoQuestion(question1);
+                } else {
+                    dbHelper.updateQuestion(question1);
+                }
+
+                Toast.makeText(this, "Update success!", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.e("Update question fail!", e.getMessage());
+
+                Toast.makeText(this, "Update question fail!", Toast.LENGTH_SHORT).show();
+            }
         });
 
 //        TODO: event btnCancel click
@@ -60,8 +84,6 @@ public class UpdateQuestionActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btn_update_ques);
         btnCancel = findViewById(R.id.btn_cancel_update_ques);
 
-        Bundle bundleQues = getIntent().getBundleExtra("bundle");
-        question = (Question) bundleQues.getSerializable("data");
         List<String> listTopic = dbHelper.getNameTopic();
         ArrayAdapter<String> adapterTopic = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listTopic);
         ArrayAdapter<String> adapterAns = new ArrayAdapter<>
@@ -84,7 +106,6 @@ public class UpdateQuestionActivity extends AppCompatActivity {
             }
         }
 
-
         txtContent.setText(question.getContent());
         txtOption1.setText(question.getOption1());
         txtOption2.setText(question.getOption2());
@@ -93,6 +114,6 @@ public class UpdateQuestionActivity extends AppCompatActivity {
         atwAnswer.setAdapter(adapterAns);
         atwAnswer.setText(adapterAns.getItem(pos), false);
         atwTopic.setAdapter(adapterTopic);
-        atwTopic.setText(adapterTopic.getItem(position),false);
+        atwTopic.setText(adapterTopic.getItem(position), false);
     }
 }

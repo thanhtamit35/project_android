@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat;
 import com.example.quizapp.R;
 import com.example.quizapp.Utils;
 import com.example.quizapp.database.DBHelper;
-import com.example.quizapp.model.Topic;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
@@ -68,15 +67,6 @@ public class AddNewTopicActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Thêm mới topic không thành công!", Toast.LENGTH_SHORT).show();
                 }
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (loadImageFromDb()) {
-//                            imageView.setVisibility(View.VISIBLE);
-//                            showMessage("Image loaded from database successfully!");
-//                        }
-//                    }
-//                }, 3000);
             } else {
                 Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             }

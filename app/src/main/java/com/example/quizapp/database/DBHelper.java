@@ -162,7 +162,12 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-
+    /**
+     * Method get topic by topic name
+     *
+     * @param topicName - name of topic
+     * @return Object topic
+     */
     public Topic getTopic(String topicName) {
         String sql = "SELECT * FROM tbl_topic WHERE nameTopic = '" + topicName + "'";
         Cursor cursor = getReadableDatabase().rawQuery(sql, null);
@@ -193,6 +198,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    /**
+     * Method get gall data in tbl_topic
+     *
+     * @return list topic
+     */
     public List<Topic> getAllTopic() {
         List<Topic> topics = new ArrayList<>();
         String sql = "SELECT * FROM tbl_topic";
@@ -255,7 +265,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String option4 = cursor.getString(6);
             String ans = cursor.getString(7);
 
-            Question question = new Question(idQuestion,  idTopic,contentQues, option1, option2, option3, option4, ans);
+            Question question = new Question(idQuestion, idTopic, contentQues, option1, option2, option3, option4, ans);
             questions.add(question);
         }
 
@@ -293,6 +303,62 @@ public class DBHelper extends SQLiteOpenHelper {
         getWritableDatabase().insert("tbl_topic", null, cv);
     }
 
+    /**
+     * Method update image when name topic is not change
+     *
+     * @param topic object topic
+     */
+    public void updateImg(Topic topic) {
+        ContentValues cv = new ContentValues();
+        cv.put("imageTopic", topic.getImageTopic());
+        getWritableDatabase().update("tbl_topic", cv, "idTopic = ?", new String[]{String.valueOf(topic.getIdTopic())});
+    }
+
+    /**
+     * Method update topic when name topic or both name topic and image changed
+     *
+     * @param topic object topic
+     */
+    public void updateTopic(Topic topic) {
+        ContentValues cv = new ContentValues();
+        cv.put("nameTopic", topic.getNameTopic());
+        cv.put("imageTopic", topic.getImageTopic());
+        getWritableDatabase().update("tbl_topic", cv, "idTopic = ?", new String[]{String.valueOf(topic.getIdTopic())});
+    }
+
+    /**
+     * Method update information question but not update content
+     *
+     * @param question object question
+     */
+    public void updateInfoQuestion(Question question) {
+        ContentValues cv = new ContentValues();
+        cv.put("idTopic", question.getIdTopic());
+        cv.put("option1", question.getOption1());
+        cv.put("option2", question.getOption2());
+        cv.put("option3", question.getOption3());
+        cv.put("option4", question.getOption4());
+        cv.put("answer", question.getAnswer());
+        getWritableDatabase().update("tbl_question", cv, "idQuestion = ?", new String[]{String.valueOf(question.getIdQuestion())});
+    }
+
+    /**
+     * Method update all information question
+     *
+     * @param question object question
+     */
+    public void updateQuestion(Question question) {
+        ContentValues cv = new ContentValues();
+        cv.put("content", question.getContent());
+        cv.put("idTopic", question.getIdTopic());
+        cv.put("option1", question.getOption1());
+        cv.put("option2", question.getOption2());
+        cv.put("option3", question.getOption3());
+        cv.put("option4", question.getOption4());
+        cv.put("answer", question.getAnswer());
+        getWritableDatabase().update("tbl_question", cv, "idQuestion = ?", new String[]{String.valueOf(question.getIdQuestion())});
+    }
+
     public byte[] retrieveImageFromDB() {
         Cursor cursor = getReadableDatabase().query(true, "tbl_topic",
                 new String[]{"imageTopic",}, null,
@@ -322,7 +388,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String option4 = cursor.getString(6);
             String ans = cursor.getString(7);
 
-            question = new Question(idQuestion,  idTopic,contentQues, option1, option2, option3, option4, ans);
+            question = new Question(idQuestion, idTopic, contentQues, option1, option2, option3, option4, ans);
         }
 
         return question;
@@ -416,7 +482,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String option4 = cursor.getString(6);
             String answer = cursor.getString(7);
 
-            Question question = new Question(id,  idTopic, content,option1, option2, option3, option4, answer);
+            Question question = new Question(id, idTopic, content, option1, option2, option3, option4, answer);
             questions.add(question);
         }
 

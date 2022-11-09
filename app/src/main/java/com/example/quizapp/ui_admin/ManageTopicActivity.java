@@ -3,7 +3,6 @@ package com.example.quizapp.ui_admin;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -54,7 +53,7 @@ public class ManageTopicActivity extends AppCompatActivity {
         mapping();
 
         topics = new ArrayList<>();
-        topics = getAll();
+        topics = dbHelper.getAllTopic();
 
         adapter = new TopicAdapter(this, R.layout.item, topics);
         listView.setAdapter(adapter);
@@ -76,6 +75,7 @@ public class ManageTopicActivity extends AppCompatActivity {
                 = new ColorDrawable(Color.parseColor("#00c853"));
 
         // Set BackgroundDrawable
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(colorDrawable);
 
         // drawer layout instance to toggle the menu icon to open
@@ -126,11 +126,10 @@ public class ManageTopicActivity extends AppCompatActivity {
     }
 
     private void addActions() {
-        btnAdd.setOnClickListener(view -> {
-            startActivity(new Intent(this, AddNewTopicActivity.class));
-        });
+        btnAdd.setOnClickListener(view -> startActivity(new Intent(this, AddNewTopicActivity.class)));
     }
 
+    @SuppressLint("SetTextI18n")
     private void mapping() {
         listView = findViewById(R.id.lvw_list);
         edtSearch = findViewById(R.id.edt_search);
@@ -138,31 +137,13 @@ public class ManageTopicActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("acc_user_name.xml", MODE_PRIVATE);
         View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
+        TextView navUsername = headerView.findViewById(R.id.tw_full_name);
         navUsername.setText("Hi, " + sharedPreferences.getString("fullNameAdmin", null));
 
-        MaterialButton btnEditAcc = (MaterialButton) headerView.findViewById(R.id.btn_edit_account);
+        MaterialButton btnEditAcc = headerView.findViewById(R.id.btn_edit_account);
         btnEditAcc.setOnClickListener(view -> {
             startActivity(new Intent(this, EditInfoActivity.class));
             finish();
         });
-    }
-
-    private List<Topic> getAll() {
-        List<Topic> topics = new ArrayList<>();
-        String sql = "SELECT * FROM tbl_topic";
-
-        Cursor cursor = dbHelper.selectSQL(sql);
-
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            byte[] img = cursor.getBlob(2);
-
-            Topic topic = new Topic(id, name, img);
-            topics.add(topic);
-        }
-
-        return topics;
     }
 }

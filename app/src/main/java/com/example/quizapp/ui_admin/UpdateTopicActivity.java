@@ -1,11 +1,19 @@
 package com.example.quizapp.ui_admin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.quizapp.R;
 import com.example.quizapp.Utils;
@@ -15,7 +23,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class UpdateTopicActivity extends AppCompatActivity {
@@ -35,18 +43,28 @@ public class UpdateTopicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_topic);
         Objects.requireNonNull(this.getSupportActionBar()).hide();
 
-        findViewById(R.id.btn_update_topic).setOnClickListener(view -> {
-
-        });
+        Bundle bundleTopic = getIntent().getBundleExtra("bundle");
+        topic = (Topic) bundleTopic.getSerializable("data");
 
         mapping();
         addActions();
     }
 
     private void addActions() {
+
+        twChooseImg.setOnClickListener(view -> {
+            if (hasStoragePermission(UpdateTopicActivity.this)) {
+                openImageChooser();
+            } else {
+                ActivityCompat.requestPermissions(((AppCompatActivity) UpdateTopicActivity.this),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
+            }
+        });
+
 //        TODO: event btnSave click
         btnSave.setOnClickListener(view -> {
-
+            saveUpdateInDB(selectImageUri);
         });
 
 //        TODO: event btnCancel click
@@ -56,12 +74,59 @@ public class UpdateTopicActivity extends AppCompatActivity {
         });
     }
 
-    private void mapping() {
-        TextInputEditText edtNameTopic = findViewById(R.id.edt_update_topic_name);
-        ImageView img = findViewById(R.id.update_img_topic);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                assert data != null;
+                selectImageUri = data.getData();
 
-        Bundle bundleTopic = getIntent().getBundleExtra("bundle");
-        topic = (Topic) bundleTopic.getSerializable("data");
+                if (selectImageUri != null) {
+                    img.setImageURI(selectImageUri);
+                }
+            }
+        }
+    }
+
+    private void openImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+    }
+
+    private boolean saveUpdateInDB(Uri selectImageUri) {
+        try {
+            String topicName = Objects.requireNonNull(edtNameTopic.getText()).toString();
+            InputStream inputStream = getContentResolver().openInputStream(selectImageUri);
+            byte[] inputData = Utils.getBytes(inputStream);
+            Topic topic1 = new Topic(topic.getIdTopic(), topicName, inputData);
+
+            if (topicName.equals(topic.getNameTopic())) {
+                dbHelper.updateImg(topic1);
+            } else {
+                dbHelper.updateTopic(topic1);
+            }
+            Toast.makeText(this, "Update success!", Toast.LENGTH_SHORT).show();
+            return true;
+        } catch (Exception e) {
+            Log.e("Update fail!", e.getMessage());
+            Toast.makeText(this, "Topic đã tồn tại!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    private boolean hasStoragePermission(Context context) {
+        int read = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
+        return read == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void mapping() {
+        edtNameTopic = findViewById(R.id.edt_update_topic_name);
+        img = findViewById(R.id.img_topic_update);
+        twChooseImg = findViewById(R.id.tw_choose_img);
+
         edtNameTopic.setText(topic.getNameTopic());
         img.setImageBitmap(Utils.getImage(topic.getImageTopic()));
 
