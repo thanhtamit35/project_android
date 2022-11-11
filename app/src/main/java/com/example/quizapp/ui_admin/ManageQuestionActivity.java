@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -23,8 +25,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.quizapp.EditInfoActivity;
 import com.example.quizapp.R;
 import com.example.quizapp.adapter.QuestionAdapter;
+import com.example.quizapp.adapter.TopicAdapter;
 import com.example.quizapp.database.DBHelper;
 import com.example.quizapp.model.Question;
+import com.example.quizapp.model.Topic;
 import com.example.quizapp.ui_user.LoginActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
@@ -40,6 +44,7 @@ public class ManageQuestionActivity extends AppCompatActivity {
     NavigationView navigationView;
     QuestionAdapter adapter;
     List<Question> questions;
+    MaterialButton btnEditAcc;
     List<Question> questionFiltered;
     EditText edtSearch;
     ListView listView;
@@ -125,6 +130,44 @@ public class ManageQuestionActivity extends AppCompatActivity {
             startActivity(new Intent(this, AddNewQuestionActivity.class));
         });
 
+        btnEditAcc.setOnClickListener(view -> {
+            startActivity(new Intent(this, EditInfoActivity.class));
+            finish();
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                questionFiltered = new ArrayList<>();
+
+                String s = charSequence.toString().toLowerCase();
+
+                if (questionFiltered.size() > 0)
+                    questionFiltered.clear();
+                if (s.length() == 0) {
+                    questionFiltered.addAll(questions);
+                } else {
+                    for (Question question : questions) {
+                        if (question.getContent().toLowerCase().contains(s)) {
+                            questionFiltered.add(question);
+                        }
+                    }
+                }
+
+                adapter = new QuestionAdapter(ManageQuestionActivity.this, R.layout.item_question, questionFiltered);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -143,11 +186,7 @@ public class ManageQuestionActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
         navUsername.setText("Hi, " + sharedPreferences.getString("fullNameAdmin", null));
-        MaterialButton btnEditAcc = (MaterialButton) headerView.findViewById(R.id.btn_edit_account);
-        btnEditAcc.setOnClickListener(view -> {
-            startActivity(new Intent(this, EditInfoActivity.class));
-            finish();
-        });
+        btnEditAcc = (MaterialButton) headerView.findViewById(R.id.btn_edit_account);
     }
 
 }

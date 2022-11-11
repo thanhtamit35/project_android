@@ -8,6 +8,9 @@ public class Topic implements Serializable {
     String nameTopic;
     byte[] imageTopic;
 
+    public Topic() {
+    }
+
     public Topic(int idTopic, String nameTopic, byte[] imageTopic) {
         this.idTopic = idTopic;
         this.nameTopic = nameTopic;

@@ -12,6 +12,7 @@ import android.widget.Adapter;
 import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -143,9 +144,13 @@ public class SelectTopicActivity extends AppCompatActivity {
             Topic topic = (Topic) view.getTag();
             int id = topic.getIdTopic();
 
-            Intent intent = new Intent(this, StartQuizActivity.class);
-            intent.putExtra("id", id);
-            startActivity(intent);
+            if (dbHelper.getQuestionByIdTopic(id).size() == 0) {
+                Toast.makeText(this, "Câu hỏi sẽ được cập nhật sớm. Vui lòng chọn topic khác!", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(this, StartQuizActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
         });
     }
 

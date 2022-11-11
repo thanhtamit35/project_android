@@ -6,9 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import com.example.quizapp.model.Topic;
 import com.example.quizapp.ui_user.LoginActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,8 @@ public class ManageTopicActivity extends AppCompatActivity {
     TopicAdapter adapter;
     List<Topic> topics;
     List<Topic> topicFiltered;
-    EditText edtSearch;
+    TextInputEditText edtSearch;
+    MaterialButton btnEditAcc;
     ListView listView;
     DBHelper dbHelper = new DBHelper(this);
     MaterialButton btnAdd;
@@ -51,13 +54,6 @@ public class ManageTopicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage_topic);
         createActionbar();
         mapping();
-
-        topics = new ArrayList<>();
-        topics = dbHelper.getAllTopic();
-
-        adapter = new TopicAdapter(this, R.layout.item, topics);
-        listView.setAdapter(adapter);
-
         addActions();
     }
 
@@ -127,6 +123,45 @@ public class ManageTopicActivity extends AppCompatActivity {
 
     private void addActions() {
         btnAdd.setOnClickListener(view -> startActivity(new Intent(this, AddNewTopicActivity.class)));
+
+        btnEditAcc.setOnClickListener(view -> {
+            startActivity(new Intent(this, EditInfoActivity.class));
+            finish();
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                topicFiltered = new ArrayList<>();
+
+                String s = charSequence.toString().toLowerCase();
+
+                if (topicFiltered.size() > 0)
+                    topicFiltered.clear();
+                if (s.length() == 0) {
+                    topicFiltered.addAll(topics);
+                } else {
+                    for (Topic t : topics) {
+                        if (t.getNameTopic().toLowerCase().contains(s)) {
+                            topicFiltered.add(t);
+                        }
+                    }
+                }
+
+                adapter = new TopicAdapter(ManageTopicActivity.this, R.layout.item, topicFiltered);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -140,10 +175,12 @@ public class ManageTopicActivity extends AppCompatActivity {
         TextView navUsername = headerView.findViewById(R.id.tw_full_name);
         navUsername.setText("Hi, " + sharedPreferences.getString("fullNameAdmin", null));
 
-        MaterialButton btnEditAcc = headerView.findViewById(R.id.btn_edit_account);
-        btnEditAcc.setOnClickListener(view -> {
-            startActivity(new Intent(this, EditInfoActivity.class));
-            finish();
-        });
+        topics = new ArrayList<>();
+        topics = dbHelper.getAllTopic();
+
+        adapter = new TopicAdapter(this, R.layout.item, topics);
+        listView.setAdapter(adapter);
+
+        btnEditAcc = headerView.findViewById(R.id.btn_edit_account);
     }
 }

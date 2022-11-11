@@ -64,7 +64,10 @@ public class UpdateTopicActivity extends AppCompatActivity {
 
 //        TODO: event btnSave click
         btnSave.setOnClickListener(view -> {
-            saveUpdateInDB(selectImageUri);
+            if (saveUpdateInDB(selectImageUri)) {
+                startActivity(new Intent(this, ManageTopicActivity.class));
+                finish();
+            }
         });
 
 //        TODO: event btnCancel click
@@ -99,8 +102,15 @@ public class UpdateTopicActivity extends AppCompatActivity {
     private boolean saveUpdateInDB(Uri selectImageUri) {
         try {
             String topicName = Objects.requireNonNull(edtNameTopic.getText()).toString();
-            InputStream inputStream = getContentResolver().openInputStream(selectImageUri);
-            byte[] inputData = Utils.getBytes(inputStream);
+            InputStream inputStream;
+            byte[] inputData;
+            if (selectImageUri == null) {
+                inputData = topic.getImageTopic();
+            } else {
+                inputStream = getContentResolver().openInputStream(selectImageUri);
+                inputData = Utils.getBytes(inputStream);
+            }
+
             Topic topic1 = new Topic(topic.getIdTopic(), topicName, inputData);
 
             if (topicName.equals(topic.getNameTopic())) {

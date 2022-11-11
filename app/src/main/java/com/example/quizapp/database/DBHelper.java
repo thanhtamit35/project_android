@@ -115,17 +115,19 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public Account getAccount(String userName) {
         String sql = "SELECT * FROM tbl_account WHERE userName = '" + userName + "';";
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
-        Account acc = null;
+        Account acc;
+        try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
+            acc = null;
 
-        while (cursor.moveToNext()) {
-            int idAcc = cursor.getInt(0);
-            String user = cursor.getString(1);
-            String pass = cursor.getString(2);
-            int idRole = cursor.getInt(3);
-            String fullName = cursor.getString(4);
+            while (cursor.moveToNext()) {
+                int idAcc = cursor.getInt(0);
+                String user = cursor.getString(1);
+                String pass = cursor.getString(2);
+                int idRole = cursor.getInt(3);
+                String fullName = cursor.getString(4);
 
-            acc = new Account(idAcc, user, pass, idRole, fullName);
+                acc = new Account(idAcc, user, pass, idRole, fullName);
+            }
         }
 
         return acc;
@@ -146,7 +148,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean updateAcc(Account acc) {
+    public void updateAcc(Account acc) {
         try {
             String insert = "UPDATE tbl_account\n" +
                     "SET fullName = '" + acc.getFullName() + "',\n" +
@@ -155,10 +157,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
             execsSQL(insert);
 
-            return true;
         } catch (Exception e) {
             Log.e("Insert fail!", e.getMessage());
-            return false;
         }
     }
 
@@ -225,19 +225,21 @@ public class DBHelper extends SQLiteOpenHelper {
      * Get topic by id
      *
      * @param id
-     * @return
+     * @return object topic
      */
     public Topic getTopicById(int id) {
         String sql = "SELECT * FROM tbl_topic WHERE idTopic = " + id;
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
-        Topic topic = null;
+        Topic topic;
+        try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
+            topic = null;
 
-        while (cursor.moveToNext()) {
-            int idTopic = cursor.getInt(0);
-            String nameTopic = cursor.getString(1);
-            byte[] imageTopic = cursor.getBlob(2);
+            while (cursor.moveToNext()) {
+                int idTopic = cursor.getInt(0);
+                String nameTopic = cursor.getString(1);
+                byte[] imageTopic = cursor.getBlob(2);
 
-            topic = new Topic(idTopic, nameTopic, imageTopic);
+                topic = new Topic(idTopic, nameTopic, imageTopic);
+            }
         }
 
         return topic;
@@ -279,12 +281,14 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public List<String> getNameTopic() {
         String sql = "SELECT nameTopic FROM tbl_topic";
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
-        List<String> topics = new ArrayList<>();
+        List<String> topics;
+        try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
+            topics = new ArrayList<>();
 
-        while (cursor.moveToNext()) {
-            String nameTopic = cursor.getString(0);
-            topics.add(nameTopic);
+            while (cursor.moveToNext()) {
+                String nameTopic = cursor.getString(0);
+                topics.add(nameTopic);
+            }
         }
 
         return topics;
@@ -442,10 +446,11 @@ public class DBHelper extends SQLiteOpenHelper {
         String nameQuiz = "";
 
         String sql = "SELECT namQuiz FROM tbl_quiz WHERE idQuiz =" + id;
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
 
-        while (cursor.moveToNext()) {
-            nameQuiz = cursor.getString(0);
+            while (cursor.moveToNext()) {
+                nameQuiz = cursor.getString(0);
+            }
         }
 
         return nameQuiz;
@@ -470,20 +475,21 @@ public class DBHelper extends SQLiteOpenHelper {
         List<Question> questions = new ArrayList<>();
         String sql = "SELECT * FROM tbl_question";
 
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
 
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            int idTopic = cursor.getInt(1);
-            String content = cursor.getString(2);
-            String option1 = cursor.getString(3);
-            String option2 = cursor.getString(4);
-            String option3 = cursor.getString(5);
-            String option4 = cursor.getString(6);
-            String answer = cursor.getString(7);
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+                int idTopic = cursor.getInt(1);
+                String content = cursor.getString(2);
+                String option1 = cursor.getString(3);
+                String option2 = cursor.getString(4);
+                String option3 = cursor.getString(5);
+                String option4 = cursor.getString(6);
+                String answer = cursor.getString(7);
 
-            Question question = new Question(id, idTopic, content, option1, option2, option3, option4, answer);
-            questions.add(question);
+                Question question = new Question(id, idTopic, content, option1, option2, option3, option4, answer);
+                questions.add(question);
+            }
         }
 
         return questions;
@@ -544,16 +550,25 @@ public class DBHelper extends SQLiteOpenHelper {
         return quizzes;
     }
 
-    public boolean deleteHistory(int idAcc) {
+    public void deleteHistory(int idAcc) {
         try {
             String sql = "DELETE FROM tbl_history WHERE tbl_history.idAcc = " + idAcc + ";\n";
 
             execsSQL(sql);
 
-            return true;
         } catch (Exception e) {
             Log.e("Delete fail!", e.getMessage());
-            return false;
+        }
+    }
+
+    public void delHistoryByIdQuiz(int idQuiz) {
+        try {
+            String sql = "DELETE FROM tbl_history WHERE tbl_history.idQuiz = " + idQuiz + ";\n";
+
+            execsSQL(sql);
+
+        } catch (Exception e) {
+            Log.e("Delete fail!", e.getMessage());
         }
     }
 
@@ -570,9 +585,31 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean deleteQuiz(int idQuiz) {
+    public void deleteQuiz(int idQuiz) {
         try {
             String sql = "DELETE FROM tbl_quiz WHERE tbl_quiz.idQuiz = " + idQuiz + ";\n";
+
+            execsSQL(sql);
+
+        } catch (Exception e) {
+            Log.e("Delete fail!", e.getMessage());
+        }
+    }
+
+    public void delQuestion(int idQuestion) {
+        try {
+            String sql = "DELETE FROM tbl_question WHERE tbl_question.idQuestion = " + idQuestion + ";\n";
+
+            execsSQL(sql);
+
+        } catch (Exception e) {
+            Log.e("Delete fail!", e.getMessage());
+        }
+    }
+
+    public boolean deleteTopic(int id) {
+        try {
+            String sql = "DELETE FROM tbl_topic WHERE tbl_topic.idTopic = " + id + ";\n";
 
             execsSQL(sql);
 
@@ -581,5 +618,95 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.e("Delete fail!", e.getMessage());
             return false;
         }
+    }
+
+    public boolean deleteQuizQuestionByIdQuestion(int idQuestion) {
+        try {
+            String sql = "DELETE FROM tbl_quiz_question WHERE tbl_quiz_question.idQuestion = " + idQuestion + ";\n";
+
+            execsSQL(sql);
+
+            return true;
+        } catch (Exception e) {
+            Log.e("Delete fail!", e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Method get all question by idTopic
+     *
+     * @param idTopic id topic
+     * @return list id
+     */
+    public List<Integer> getQuestion(int idTopic) {
+        List<Integer> idQuestions = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT tbl_question.idQuestion \n" +
+                "FROM tbl_topic\n" +
+                "INNER JOIN tbl_question ON tbl_question.idTopic = tbl_topic.idTopic\n" +
+                "INNER JOIN tbl_quiz_question ON tbl_quiz_question.idQuestion = tbl_question.idQuestion\n" +
+                "INNER JOIN tbl_quiz ON tbl_quiz.idQuiz = tbl_quiz_question.idQuiz\n" +
+                "WHERE tbl_topic.idTopic = " + idTopic + ";";
+
+        try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
+
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+
+                idQuestions.add(id);
+            }
+        }
+
+        return idQuestions;
+    }
+
+    public List<Integer> getQuiz(int idTopic) {
+        List<Integer> idQuiz = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT tbl_quiz.idQuiz\n" +
+                "FROM tbl_topic\n" +
+                "INNER JOIN tbl_question ON tbl_question.idTopic = tbl_topic.idTopic\n" +
+                "INNER JOIN tbl_quiz_question ON tbl_quiz_question.idQuestion = tbl_question.idQuestion\n" +
+                "INNER JOIN tbl_quiz ON tbl_quiz.idQuiz = tbl_quiz_question.idQuiz\n" +
+                "WHERE tbl_topic.idTopic = " + idTopic + ";";
+
+        try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
+
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+
+                idQuiz.add(id);
+            }
+        }
+
+        return idQuiz;
+    }
+
+    /**
+     * Method get list id quiz by id question
+     *
+     * @param idQuestion - id question
+     * @return list id quiz
+     */
+    public List<Integer> getListIdQuiz(int idQuestion) {
+        List<Integer> idQuiz = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT tbl_quiz.idQuiz\n" +
+                "FROM tbl_question\n" +
+                "INNER JOIN tbl_quiz_question ON tbl_quiz_question.idQuestion = tbl_question.idQuestion\n" +
+                "INNER JOIN tbl_quiz ON tbl_quiz.idQuiz = tbl_quiz_question.idQuiz\n" +
+                "WHERE tbl_question.idQuestion = " + idQuestion;
+
+        try (Cursor cursor = getReadableDatabase().rawQuery(sql, null)) {
+
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+
+                idQuiz.add(id);
+            }
+        }
+
+        return idQuiz;
     }
 }

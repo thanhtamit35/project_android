@@ -82,20 +82,26 @@ public class QuestionAdapter extends BaseAdapter {
         btnDel.setOnClickListener(v -> {
             int positionToRemove = (int) v.getTag(); //get the position of the view to delete stored in the tag
             Question ques = questions.get(positionToRemove);
+            List<Integer> listIdQuiz = dbHelper.getListIdQuiz(ques.getIdQuestion());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Xác nhận xoá");
             builder.setMessage("Bạn có thật sự muốn xoá question \"" + questions.get(i).getContent() + "\" không?");
             builder.setPositiveButton("Có", (dialogInterface, i1) -> {
 //                TODO: delete data in database -> delete item in listView
+                if (listIdQuiz.size() != 0) {
+                    for (int j = 0; j < listIdQuiz.size(); j++) {
+                        dbHelper.delHistoryByIdQuiz(listIdQuiz.get(j));
+                        dbHelper.deleteQuizQuestion(listIdQuiz.get(j));
+                        dbHelper.deleteQuiz(listIdQuiz.get(j));
+                    }
 
-
-//            TODO: remove data by id topic in database
-
+                }
+                dbHelper.delQuestion(ques.getIdQuestion());
 
 //            TODO: remove item in adapter
-//            questions.remove(positionToRemove);
-//            notifyDataSetChanged(); //remove the item
+            questions.remove(positionToRemove);
+            notifyDataSetChanged(); //remove the item
             });
 
             builder.setNegativeButton("Không", (dialogInterface, i1) -> {

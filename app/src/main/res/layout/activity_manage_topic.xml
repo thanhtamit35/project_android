@@ -33,13 +33,14 @@
             android:layout_gravity="end"
             android:backgroundTint="#54B435"
             app:icon="@drawable/ic_baseline_add_24"
+            android:layout_marginHorizontal="10dp"
             app:iconTint="#eceff1" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
+            android:layout_marginHorizontal="10dp"
             android:hint="Tìm kiếm topic"
             app:startIconContentDescription="content_description_start_icon"
             app:startIconDrawable="@drawable/ic_baseline_search_24">

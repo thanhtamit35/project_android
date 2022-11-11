@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:text="History test"
+                android:fontFamily="@font/poppins_medium"
                 android:textAlignment="center"
                 android:textColor="#3D8361"
                 android:textSize="35sp"
