@@ -3,7 +3,6 @@ package com.example.quizapp.ui_admin;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,10 +24,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.quizapp.EditInfoActivity;
 import com.example.quizapp.R;
 import com.example.quizapp.adapter.QuestionAdapter;
-import com.example.quizapp.adapter.TopicAdapter;
 import com.example.quizapp.database.DBHelper;
 import com.example.quizapp.model.Question;
-import com.example.quizapp.model.Topic;
 import com.example.quizapp.ui_user.LoginActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
@@ -76,6 +73,7 @@ public class ManageQuestionActivity extends AppCompatActivity {
                 = new ColorDrawable(Color.parseColor("#00c853"));
 
         // Set BackgroundDrawable
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(colorDrawable);
 
         // drawer layout instance to toggle the menu icon to open
@@ -126,9 +124,7 @@ public class ManageQuestionActivity extends AppCompatActivity {
     }
 
     private void addActions() {
-        btnAdd.setOnClickListener(view -> {
-            startActivity(new Intent(this, AddNewQuestionActivity.class));
-        });
+        btnAdd.setOnClickListener(view -> startActivity(new Intent(this, AddNewQuestionActivity.class)));
 
         btnEditAcc.setOnClickListener(view -> {
             startActivity(new Intent(this, EditInfoActivity.class));

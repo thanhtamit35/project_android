@@ -170,7 +170,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public Topic getTopic(String topicName) {
         String sql = "SELECT * FROM tbl_topic WHERE nameTopic = '" + topicName + "'";
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        @SuppressLint("Recycle") Cursor cursor = getReadableDatabase().rawQuery(sql, null);
         Topic topic = null;
 
         while (cursor.moveToNext()) {
@@ -188,8 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
         int id = 0;
 
         String sql = "SELECT * FROM tbl_topic WHERE nameTopic = '" + nameTopic + "'";
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
-        Topic topic = null;
+        @SuppressLint("Recycle") Cursor cursor = getReadableDatabase().rawQuery(sql, null);
 
         while (cursor.moveToNext()) {
             id = cursor.getInt(0);
@@ -207,7 +206,7 @@ public class DBHelper extends SQLiteOpenHelper {
         List<Topic> topics = new ArrayList<>();
         String sql = "SELECT * FROM tbl_topic";
 
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        @SuppressLint("Recycle") Cursor cursor = getReadableDatabase().rawQuery(sql, null);
 
         while (cursor.moveToNext()) {
             int idTopic = cursor.getInt(0);
@@ -224,7 +223,7 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * Get topic by id
      *
-     * @param id
+     * @param id id topic
      * @return object topic
      */
     public Topic getTopicById(int id) {
@@ -254,7 +253,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public List<Question> getQuestionByIdTopic(int id) {
         // ORDER BY random() LIMIT 5;
         String sql = "SELECT * FROM tbl_question WHERE idTopic = " + id;
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        @SuppressLint("Recycle") Cursor cursor = getReadableDatabase().rawQuery(sql, null);
         List<Question> questions = new ArrayList<>();
 
         while (cursor.moveToNext()) {
@@ -379,7 +378,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Question getQuestion(String content) {
         String sql = "SELECT * FROM tbl_question WHERE content = '" + content + "'";
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        @SuppressLint("Recycle") Cursor cursor = getReadableDatabase().rawQuery(sql, null);
         Question question = null;
 
         while (cursor.moveToNext()) {
@@ -535,7 +534,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "INNER JOIN tbl_quiz ON tbl_quiz.idQuiz = tbl_history.idQuiz\n" +
                 "ORDER BY tbl_quiz.score DESC";
 
-        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        @SuppressLint("Recycle") Cursor cursor = getReadableDatabase().rawQuery(sql, null);
         List<Quiz> quizzes = new ArrayList<>();
 
         while (cursor.moveToNext()) {
@@ -572,16 +571,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean deleteQuizQuestion(int idQuiz) {
+    public void deleteQuizQuestion(int idQuiz) {
         try {
             String sql = "DELETE FROM tbl_quiz_question WHERE tbl_quiz_question.idQuiz = " + idQuiz + ";\n";
 
             execsSQL(sql);
 
-            return true;
         } catch (Exception e) {
             Log.e("Delete fail!", e.getMessage());
-            return false;
         }
     }
 
@@ -607,16 +604,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean deleteTopic(int id) {
+    public void deleteTopic(int id) {
         try {
             String sql = "DELETE FROM tbl_topic WHERE tbl_topic.idTopic = " + id + ";\n";
 
             execsSQL(sql);
 
-            return true;
         } catch (Exception e) {
             Log.e("Delete fail!", e.getMessage());
-            return false;
         }
     }
 
