@@ -38,11 +38,11 @@ public class AddNewQuestionActivity extends AppCompatActivity {
 
     private void addActions() {
         btnSave.setOnClickListener(view -> {
-            String content = txtContent.getText().toString();
-            String op1 = txtOption1.getText().toString();
-            String op2 = txtOption2.getText().toString();
-            String op3 = txtOption3.getText().toString();
-            String op4 = txtOption4.getText().toString();
+            String content = Objects.requireNonNull(txtContent.getText()).toString();
+            String op1 = Objects.requireNonNull(txtOption1.getText()).toString();
+            String op2 = Objects.requireNonNull(txtOption2.getText()).toString();
+            String op3 = Objects.requireNonNull(txtOption3.getText()).toString();
+            String op4 = Objects.requireNonNull(txtOption4.getText()).toString();
             int idTopic = dbHelper.getIdTopic(tpName);
 
             if (!content.isEmpty() && !op1.isEmpty() && !op2.isEmpty() && !op3.isEmpty() && !op4.isEmpty()) {
@@ -62,13 +62,9 @@ public class AddNewQuestionActivity extends AppCompatActivity {
             }
         });
 
-        atwTopic.setOnItemClickListener((adapterView, view, i, l) -> {
-            tpName = adapterView.getItemAtPosition(i).toString();
-        });
+        atwTopic.setOnItemClickListener((adapterView, view, i, l) -> tpName = adapterView.getItemAtPosition(i).toString());
 
-        atwAnswer.setOnItemClickListener((adapterView, view, i, l) -> {
-            ans = adapterView.getItemAtPosition(i).toString();
-        });
+        atwAnswer.setOnItemClickListener((adapterView, view, i, l) -> ans = adapterView.getItemAtPosition(i).toString());
 
         btnCancel.setOnClickListener(view -> {
             startActivity(new Intent(AddNewQuestionActivity.this, ManageQuestionActivity.class));
