@@ -71,7 +71,8 @@ public class AddNewQuestionActivity extends AppCompatActivity {
         });
 
         btnCancel.setOnClickListener(view -> {
-
+            startActivity(new Intent(AddNewQuestionActivity.this, ManageQuestionActivity.class));
+            finish();
         });
 
         btnBack.setOnClickListener(view -> startActivity(new Intent(this, ManageQuestionActivity.class)));
