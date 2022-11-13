@@ -59,6 +59,8 @@ public class UpdateQuestionActivity extends AppCompatActivity {
                 }
 
                 Toast.makeText(this, "Update success!", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(this, ManageQuestionActivity.class));
             } catch (Exception e) {
                 Log.e("Update question fail!", e.getMessage());
 
