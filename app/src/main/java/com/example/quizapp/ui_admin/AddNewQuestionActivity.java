@@ -57,6 +57,8 @@ public class AddNewQuestionActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Câu hỏi đã tồn tại!", Toast.LENGTH_SHORT).show();
                 }
+
+                startActivity(new Intent(this, ManageQuestionActivity.class));
             } else {
                 Toast.makeText(this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
             }

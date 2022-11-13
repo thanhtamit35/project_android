@@ -258,8 +258,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
             int idQuestion = cursor.getInt(0);
-            String contentQues = cursor.getString(1);
-            int idTopic = cursor.getInt(2);
+            int idTopic = cursor.getInt(1);
+            String contentQues = cursor.getString(2);
             String option1 = cursor.getString(3);
             String option2 = cursor.getString(4);
             String option3 = cursor.getString(5);

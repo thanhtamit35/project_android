@@ -49,7 +49,7 @@ public class AddNewTopicActivity extends AppCompatActivity {
             if (hasStoragePermission(AddNewTopicActivity.this)) {
                 openImageChooser();
             } else {
-                ActivityCompat.requestPermissions(((AppCompatActivity) AddNewTopicActivity.this),
+                ActivityCompat.requestPermissions(AddNewTopicActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
 
@@ -57,13 +57,15 @@ public class AddNewTopicActivity extends AppCompatActivity {
         });
 
         btnSave.setOnClickListener(view -> {
-            String nameTopic = edtNameTopic.getText().toString();
+            String nameTopic = Objects.requireNonNull(edtNameTopic.getText()).toString();
 
             if (selectImageUri != null && !nameTopic.isEmpty()) {
                 if (dbHelper.getTopic(nameTopic) != null) {
                     Toast.makeText(this, "Topic đã tồn tại!", Toast.LENGTH_SHORT).show();
                 } else if (saveTopicInDB(selectImageUri)) {
                     Toast.makeText(this, "Thêm mới topic thành công!", Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(this, ManageTopicActivity.class));
                 } else {
                     Toast.makeText(this, "Thêm mới topic không thành công!", Toast.LENGTH_SHORT).show();
                 }
