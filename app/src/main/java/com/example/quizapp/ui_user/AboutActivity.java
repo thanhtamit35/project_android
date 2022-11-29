@@ -1,23 +1,31 @@
 package com.example.quizapp.ui_user;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.example.quizapp.R;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -27,7 +35,11 @@ public class AboutActivity extends AppCompatActivity {
     public ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
+    MaterialCardView cardView, cardManual;
+    MaterialButton btnFeature, btnManual;
+    LinearLayout hideFeature, hideManual;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +52,37 @@ public class AboutActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.tw_full_name);
         navUsername.setText("Hello, " + sharedPreferences.getString("fullName", null));
+
+        cardView = findViewById(R.id.card_feature);
+        btnFeature = findViewById(R.id.btn_show_feature);
+        hideFeature = findViewById(R.id.hidden_feature);
+        cardManual = findViewById(R.id.card_manual);
+        btnManual = findViewById(R.id.btn_show_manual);
+        hideManual = findViewById(R.id.hidden_manual);
+
+        btnFeature.setOnClickListener(view -> {
+            if (hideFeature.getVisibility() == View.VISIBLE) {
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                hideFeature.setVisibility(View.GONE);
+                btnFeature.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_baseline_expand_more_24));
+            } else {
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                hideFeature.setVisibility(View.VISIBLE);
+                btnFeature.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_baseline_expand_less_24));
+            }
+        });
+
+        btnManual.setOnClickListener(view -> {
+            if (hideManual.getVisibility() == View.VISIBLE) {
+                TransitionManager.beginDelayedTransition(cardManual, new AutoTransition());
+                hideManual.setVisibility(View.GONE);
+                btnManual.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_baseline_expand_more_24));
+            } else {
+                TransitionManager.beginDelayedTransition(cardManual, new AutoTransition());
+                hideManual.setVisibility(View.VISIBLE);
+                btnManual.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_baseline_expand_less_24));
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

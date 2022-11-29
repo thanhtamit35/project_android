@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable-v24/ic_baseline_home_24.xml" value="0.118" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable-v24/round_back_15.xml" value="0.118" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/back_ground_res.xml" value="0.118" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/back_ground_start_quiz.xml" value="0.118" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/ic_baseline_delete_forever_24.xml" value="0.118" />
@@ -12,8 +13,9 @@
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/round_back_green10.xml" value="0.118" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/round_back_white10.xml" value="0.118" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/round_back_white20.xml" value="0.118" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/drawable/round_back_white_stroke10.xml" value="0.118" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/font/poppins_medium.xml" value="0.19907407407407407" />
-        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_about.xml" value="0.24010416666666667" />
+        <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_about.xml" value="0.25" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_add_new_question.xml" value="0.24010416666666667" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_add_new_topic.xml" value="0.24010416666666667" />
         <entry key="..\:/ProjectAndroidApp/app/src/main/res/layout/activity_admin.xml" value="0.24010416666666667" />
