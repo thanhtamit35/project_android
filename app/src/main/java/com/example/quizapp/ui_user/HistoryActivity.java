@@ -138,7 +138,6 @@ public class HistoryActivity extends AppCompatActivity {
         String userName = sharedPreferences.getString("userName", null);
         quizzes = dbHelper.getResultByUser(userName);
 
-//        adapter = new SimAdapter(this, R.layout.item, partitions.get(0));
         adapter = new HistoryAdapter(this, R.layout.item_history, quizzes);
         listView = findViewById(R.id.lvw_history);
         listView.setAdapter(adapter);

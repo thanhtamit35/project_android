@@ -528,10 +528,18 @@ public class DBHelper extends SQLiteOpenHelper {
      * @return list result
      */
     public List<Quiz> getResultByUser(String userName) {
+//        String sql = "SELECT tbl_history.idQuiz, tbl_quiz.nameQuiz, tbl_quiz.score\n" +
+//                "FROM tbl_history\n" +
+//                "INNER JOIN tbl_account ON tbl_account.userName = '" + userName + "'\n" +
+//                "INNER JOIN tbl_quiz ON tbl_quiz.idQuiz = tbl_history.idQuiz\n" +
+//                "ORDER BY tbl_quiz.score DESC";
+
+        int idAcc = getAccount(userName).getIdAcc();
+
         String sql = "SELECT tbl_history.idQuiz, tbl_quiz.nameQuiz, tbl_quiz.score\n" +
                 "FROM tbl_history\n" +
-                "INNER JOIN tbl_account ON tbl_account.userName = '" + userName + "'\n" +
                 "INNER JOIN tbl_quiz ON tbl_quiz.idQuiz = tbl_history.idQuiz\n" +
+                "WHERE tbl_history.idAcc = " + idAcc + "\n" +
                 "ORDER BY tbl_quiz.score DESC";
 
         @SuppressLint("Recycle") Cursor cursor = getReadableDatabase().rawQuery(sql, null);
@@ -598,7 +606,6 @@ public class DBHelper extends SQLiteOpenHelper {
             String sql = "DELETE FROM tbl_question WHERE tbl_question.idQuestion = " + idQuestion + ";\n";
 
             execsSQL(sql);
-
         } catch (Exception e) {
             Log.e("Delete fail!", e.getMessage());
         }
@@ -609,7 +616,6 @@ public class DBHelper extends SQLiteOpenHelper {
             String sql = "DELETE FROM tbl_topic WHERE tbl_topic.idTopic = " + id + ";\n";
 
             execsSQL(sql);
-
         } catch (Exception e) {
             Log.e("Delete fail!", e.getMessage());
         }
